@@ -7,3 +7,12 @@ edition = "2021"
 
 [dependencies]
 clap = "4.0.32"
+parity-scale-codec = "3.2.1"
+schnorrkel = "0.10.2"
+sp-core = {version ="13.0.0", features =["full_crypto"]}
+sp-core-hashing = "6.0.0"
+sp-keyring = "15.0.0"
+spinoff = "0.6.0"
+subxt = { version ="0.25.0" }
+subxt-cli = "0.25.0"
+tokio = { version = "1.8", features = ["full"] }
