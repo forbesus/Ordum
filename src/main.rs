@@ -1,3 +1,5 @@
+mod query;
+
 use std::str::FromStr;
 use spinoff::{Spinner, Spinners};
 use subxt::{Error, OnlineClient, PolkadotConfig, SubstrateConfig};
@@ -6,13 +8,10 @@ use parity_scale_codec as codec;
 use sp_core::H256;
 use sp_keyring::AccountKeyring;
 use subxt::events::StaticEvent;
-use subxt::ext::sp_runtime::AccountId32;
+use sp_runtime::AccountId32;
 use subxt::tx::{PairSigner};
-use subxt::ext::sp_core::{Decode, Encode, Pair as PairTrait};
-use subxt::ext::sp_core::sr25519::Pair;
-//use subxt::ext::sp_runtime::app_crypto::sr25519::AppPair;
-
-// return sp_keyring::sr25519::Pair -> another similar type, Implement Pair trait to it.
+use sp_core::{Decode, Encode, Pair as PairTrait};
+use sp_core::sr25519::Pair;
 
 const CONTRACT_ID: &str ="0xfac951deb3a238c9e7346c8fe81bfcd083dbed15e0ed2d6181abd3899d9a227c";
 
@@ -51,8 +50,9 @@ async fn main() {
     let acc_pair: Pair = Pair::from_string("//Mrisho",None)
         .expect("formating is a bitch");
 
+
     println!("Public-Key: {}",acc_pair.public());
-    let signer = PairSigner::<PolkadotConfig,Pair>::new(acc_pair);
+    let signer = PairSigner::new(acc_pair);
 
     let pre_result = client.tx()
         .sign_and_submit_then_watch_default(&test_create_applicant_call,&signer)
